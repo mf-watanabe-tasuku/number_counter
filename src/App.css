@@ -1,0 +1,20 @@
+.num-list { 
+  width: 300px;
+  height: 300px;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.num-item {
+  border-right: 1px solid #111;
+  border-bottom: 1px solid #111;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+.num-item:nth-child(-n+3) {
+  border-top: 1px solid #111;
+}
+.num-item:nth-child(3n-2) {
+  border-left: 1px solid #111;
+}
