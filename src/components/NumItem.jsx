@@ -1,10 +1,8 @@
-import { memo } from 'react';
-
 const NumItem = (props) => {
-  const { num, clicked, numClick } = props;
-  console.log('NumItem rendered');
+  const { num, numClick } = props;
+
   return (
-    <li className={`num-item ${clicked(num)}`} onClick={numClick}>{num}</li>
+    <li className={`num-item`} onClick={numClick}>{num}</li>
   );
 };
 
