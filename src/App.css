@@ -1,3 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.wrapper {
+  display: grid;
+  justify-content: center;
+  grid-row-gap: 50px;
+  padding: 50px 0;
+}
 .num-list { 
   width: 300px;
   height: 300px;
@@ -11,10 +22,23 @@
   display: grid;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
+  &.clicked {
+    color: #999;
+    background-color: #f0f0f0;
+    cursor: default;
+  }
 }
 .num-item:nth-child(-n+3) {
   border-top: 1px solid #111;
 }
 .num-item:nth-child(3n-2) {
   border-left: 1px solid #111;
+}
+.reset {
+  display: block;
+  padding: 10px 40px;
+  justify-self: center;
+  cursor: pointer;
 }
