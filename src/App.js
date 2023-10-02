@@ -1,39 +1,49 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
-import NumItem from './components/NumItem';
+import NumItem from './components/ListItem';
 
 const App = () => {
-  console.log('App rendered');
+  const makeShuffledNums = () => {
+    const nums = [...Array(9).keys()].map(num => num + 1);
+    const shuffledNums = [...nums.sort(() => Math.random() - 0.5)];
 
-  const nums = [...Array(9).keys()].map(num => num + 1);
-  const shuffleArray = array => [...array.sort(() => Math.random() - 0.5)];
-  let clickedNums = [];
-
-  const [shuffledNums, setShuffledNums] = useState(shuffleArray(nums));
-
-  const checkResult = () => {
-    if (clickedNums.length === nums.length) {
-      const matchedNums = clickedNums.filter((cnum, i) => cnum === shuffledNums[i]);
-
-      if (matchedNums.length === nums.length) {
-        console.log('success!');
-      } else {
-        console.log('failed...');
-      }
-    }
-  }
-
-  const numClick = (e) => {
-    clickedNums = [...clickedNums, parseInt(e.target.textContent)];
-    checkResult();
+    return shuffledNums.map(num => ({ num, clicked: false }))
   };
 
-  const reset = () => setShuffledNums(shuffleArray(nums));
+  const [count, setCount] = useState(1);
+  const [numDataState, setNumDataState] = useState(makeShuffledNums());
+
+  console.log('App rendered');
+
+  const numClick = (e) => {
+    const clickedNum = parseInt(e.target.textContent);
+    if (clickedNum !== count) return;
+
+    const newNumData = numDataState.map(numData => {
+      const { num, clicked } = numData;
+      if (clickedNum === num) {
+        return { num, clicked: !clicked };
+      }
+      return { num, clicked };
+    });
+
+    setCount(count => ++count);
+    setNumDataState(newNumData);
+
+    if (clickedNum === 9) console.log('success!');
+  };
+
+  const reset = () => {
+    setCount(1);
+    setNumDataState(makeShuffledNums());
+  }
 
   return (
     <div className="wrapper">
       <ul className="num-list">
-        {shuffledNums.map(num => <NumItem key={num} num={num} numClick={numClick} />)}
+        {numDataState.map(numData => {
+          return <NumItem key={numData.num} numData={numData} numClick={numClick} />
+        })}
       </ul>
       <button className="reset" onClick={reset}>リセット</button>
     </div>
