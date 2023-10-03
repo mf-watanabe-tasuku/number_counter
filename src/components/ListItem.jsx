@@ -1,7 +1,5 @@
-const NumItem = ({ numData, numClick }) => {
+const NumItem = ({num, clicked, numClick}) => {
   console.log('NumItem rendered');
-
-  const { num, clicked } = numData;
 
   return <li className={`num-item ${clicked ? "clicked" : ""}`} onClick={numClick}>{num}</li>;
 };
