@@ -18,7 +18,7 @@ const Stopwatch = ({ isRunning, count }) => {
   const seconds = String(Math.floor((time % 6000) / 100)).padStart(2, '0');
   const milliSeconds = String(time % 100).padStart(2, '0');
 
-  return <div>{minutes}:{seconds}:{milliSeconds}</div>;
+  return <div className="stopwatch">{minutes}:{seconds}:{milliSeconds}</div>;
 }
 
 export default Stopwatch;
