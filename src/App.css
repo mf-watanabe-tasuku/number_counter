@@ -10,15 +10,14 @@
   padding: 80px 0 30px;
 }
 .num-list {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   list-style-type: none;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
 .num-item {
   font-size: 20px;
-  font-weight: bold;
   border-right: 1px solid #111;
   border-bottom: 1px solid #111;
   display: grid;

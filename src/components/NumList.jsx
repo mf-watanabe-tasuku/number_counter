@@ -1,7 +1,7 @@
-const NumList = ({numDataState, numClick}) => (
+const NumList = ({numObjects, numClick}) => (
     <ul className="num-list">
-      {numDataState.map(numData => {
-        const {num, clicked} = numData;
+      {numObjects.map(numObject => {
+        const {num, clicked} = numObject;
         return <li key={num} className={`num-item ${clicked ? "clicked" : ""}`} onClick={numClick}>{num}</li>
       })}
     </ul>

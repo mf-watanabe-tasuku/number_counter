@@ -1,58 +1,56 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
 import NumList from './components/NumList';
 import Stopwatch from './components/Stopwatch';
 import ResetButton from './components/ResetButton';
 
 const App = () => {
-  const [count, setCount] = useState(1);
-  const [numDataState, setNumDataState] = useState([]);
-  const [isRunning, setIsRunning] = useState(false);
-
-  useEffect(() => {
-    setNumDataState(makeShuffledNums());
-  }, []);
-
   const makeShuffledNums = () => {
     const nums = [...Array(9).keys()].map(num => num + 1);
     const shuffledNums = [...nums.sort(() => Math.random() - 0.5)];
     return shuffledNums.map(num => ({ num, clicked: false }));
   };
 
-  const numClick = (e) => {
+  const [count, setCount] = useState(0);
+  const [numObjects, setNumObjects] = useState(makeShuffledNums());
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [time, setTime] = useState(0);
+
+  const handleNumClick = (e) => {
     const clickedNum = parseInt(e.target.textContent);
-    if (clickedNum !== count) return;
+    if (clickedNum !== count + 1) return;
 
-    if (clickedNum === 1) setIsRunning(true);
+    if (clickedNum === 1) setIsPlaying(true);
 
-    const newNumData = numDataState.map(numData => {
-      const { num, clicked } = numData;
+    const newNumObjects = numObjects.map(numObject => {
+      const { num, clicked } = numObject;
       if (clickedNum === num) {
-        return { num, clicked: !clicked };
+        return { ...numObject, clicked: !clicked };
       }
-      return { num, clicked };
+      return { ...numObject };
     });
 
     setCount(count => ++count);
-    setNumDataState(newNumData);
+    setNumObjects(newNumObjects);
 
     if (clickedNum === 9) {
       console.log('success!');
-      setIsRunning(false);
+      setIsPlaying(false);
     }
   };
 
-  const reset = () => {
-    setCount(1);
-    setNumDataState(makeShuffledNums());
-    setIsRunning(false);
+  const handleResetClick = () => {
+    setTime(0);
+    setCount(0);
+    setIsPlaying(false);
+    setNumObjects(makeShuffledNums());
   }
 
   return (
     <div className="wrapper">
-      <NumList numDataState={numDataState} numClick={numClick} />
-      <Stopwatch isRunning={isRunning} count={count} />
-      <ResetButton reset={reset} count={count} />
+      <NumList numObjects={numObjects} numClick={handleNumClick} />
+      <Stopwatch isPlaying={isPlaying} count={count} timeState={[time, setTime]} />
+      <ResetButton resetClick={handleResetClick} count={count} />
     </div>
   );
 };
