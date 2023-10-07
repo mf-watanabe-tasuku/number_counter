@@ -5,14 +5,15 @@ import Stopwatch from './components/Stopwatch';
 import ResetButton from './components/ResetButton';
 
 const App = () => {
-  const makeShuffledNums = () => {
+  const makeShuffledNumObjects = () => {
     const nums = [...Array(9).keys()].map(num => num + 1);
     const shuffledNums = [...nums.sort(() => Math.random() - 0.5)];
-    return shuffledNums.map(num => ({ num, clicked: false }));
+    const shuffledNumObjects = shuffledNums.map(num => ({ num, clicked: false }));
+    return shuffledNumObjects;
   };
 
   const [count, setCount] = useState(0);
-  const [numObjects, setNumObjects] = useState(makeShuffledNums());
+  const [numObjects, setNumObjects] = useState(makeShuffledNumObjects());
   const [isPlaying, setIsPlaying] = useState(false);
   const [time, setTime] = useState(0);
 
@@ -43,7 +44,7 @@ const App = () => {
     setTime(0);
     setCount(0);
     setIsPlaying(false);
-    setNumObjects(makeShuffledNums());
+    setNumObjects(makeShuffledNumObjects());
   }
 
   return (
