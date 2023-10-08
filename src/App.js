@@ -12,46 +12,44 @@ const App = () => {
     return shuffledNumObjects;
   };
 
-  const [count, setCount] = useState(0);
+  const [targetNum, setTargetNum] = useState(1);
+  const [isTimerStarted, setIsTimerStarted] = useState(false);
   const [numObjects, setNumObjects] = useState(makeShuffledNumObjects());
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [time, setTime] = useState(0);
 
   const handleNumClick = (e) => {
     const clickedNum = parseInt(e.target.textContent);
-    if (clickedNum !== count + 1) return;
+    if (clickedNum !== targetNum) return;
 
-    if (clickedNum === 1) setIsPlaying(true);
+    if (clickedNum === 1) setIsTimerStarted(true);
 
     const newNumObjects = numObjects.map(numObject => {
-      const { num, clicked } = numObject;
+      const {num, clicked} = numObject;
       if (clickedNum === num) {
         return { ...numObject, clicked: !clicked };
+      } else {
+        return { ...numObject };
       }
-      return { ...numObject };
     });
 
-    setCount(count => ++count);
+    setTargetNum(targetNum => targetNum + 1);
     setNumObjects(newNumObjects);
 
     if (clickedNum === 9) {
       console.log('success!');
-      setIsPlaying(false);
     }
   };
 
   const handleResetClick = () => {
-    setTime(0);
-    setCount(0);
-    setIsPlaying(false);
+    setTargetNum(1);
+    setIsTimerStarted(false);
     setNumObjects(makeShuffledNumObjects());
   }
 
   return (
     <div className="wrapper">
       <NumList numObjects={numObjects} numClick={handleNumClick} />
-      <Stopwatch isPlaying={isPlaying} count={count} timeState={[time, setTime]} />
-      <ResetButton resetClick={handleResetClick} count={count} />
+      <Stopwatch isTimerStarted={isTimerStarted} targetNum={targetNum} />
+      <ResetButton resetClick={handleResetClick} targetNum={targetNum} />
     </div>
   );
 };

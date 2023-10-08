@@ -1,22 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const Stopwatch = ({ isPlaying, count, timeState }) => {
-  const [time, setTime] = timeState;
+const Stopwatch = ({ isTimerStarted, targetNum }) => {
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
-    if (count === 0) {
-      setTime(0);
-      return;
-    }
-
     let intervalId;
-    if (isPlaying) {
-      // count変更後から1秒後に実行されるので、1秒以内にクリックした場合、timeが増加しないことになる。
-      intervalId = setInterval(() => setTime(time + 1), 10);
+
+    if (isTimerStarted)  {
+      if (targetNum <= 9) {
+        intervalId = setInterval(() => setTime(time + 1), 10);
+      }
+    } else {
+      setTime(0);
     }
 
     return () => clearInterval(intervalId);
-  }, [time, isPlaying]);
+  }, [time, isTimerStarted]);
 
   const minutes = String(Math.floor((time % 36000) / 6000)).padStart(2, '0');
   const seconds = String(Math.floor((time % 6000) / 100)).padStart(2, '0');
