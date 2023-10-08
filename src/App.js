@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback, memo } from 'react';
 import './App.css';
 import NumList from './components/NumList';
 import Stopwatch from './components/Stopwatch';
 import ResetButton from './components/ResetButton';
 
-const App = () => {
+const App = memo(() => {
   const makeShuffledNumObjects = () => {
     const nums = [...Array(9).keys()].map(num => num + 1);
     const shuffledNums = [...nums.sort(() => Math.random() - 0.5)];
@@ -39,19 +39,19 @@ const App = () => {
     }
   };
 
-  const handleResetClick = () => {
+  const handleResetClick = useCallback(() => {
     setTargetNum(1);
     setIsTimerStarted(false);
     setNumObjects(makeShuffledNumObjects());
-  }
+  }, []);
 
   return (
     <div className="wrapper">
       <NumList numObjects={numObjects} numClick={handleNumClick} />
       <Stopwatch isTimerStarted={isTimerStarted} targetNum={targetNum} />
-      <ResetButton resetClick={handleResetClick} targetNum={targetNum} />
+      <ResetButton resetClick={handleResetClick} isTimerStarted={isTimerStarted} />
     </div>
   );
-};
+});
 
 export default App;

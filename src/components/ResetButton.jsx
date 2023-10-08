@@ -1,5 +1,8 @@
-const ResetButton = ({resetClick, targetNum}) => {
-  return <button className="reset" onClick={resetClick} disabled={targetNum === 1}>リセット</button>;
-}
+import { memo } from 'react';
+
+const ResetButton = memo(({resetClick, isTimerStarted}) => {
+  console.log('ResetButton rendered');
+  return <button className="reset" onClick={resetClick} disabled={!isTimerStarted}>リセット</button>;
+});
 
 export default ResetButton;

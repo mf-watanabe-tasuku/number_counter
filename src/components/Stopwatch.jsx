@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const Stopwatch = ({ isTimerStarted, targetNum }) => {
+const Stopwatch = ({isTimerStarted, targetNum}) => {
+  console.log('Stopwatch rendered');
   const [time, setTime] = useState(0);
 
   useEffect(() => {
@@ -22,6 +23,6 @@ const Stopwatch = ({ isTimerStarted, targetNum }) => {
   const milliSeconds = String(time % 100).padStart(2, '0');
 
   return <div className="stopwatch">{minutes}:{seconds}:{milliSeconds}</div>;
-}
+};
 
 export default Stopwatch;
