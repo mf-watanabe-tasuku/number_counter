@@ -1,8 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 
-const Stopwatch = ({isTimerStarted, targetNum}) => {
+type Props = {
+  isTimerStarted: boolean,
+  targetNum: number
+}
+
+const Stopwatch: FC<Props> = props => {
+  const { isTimerStarted, targetNum } = props;
+
   console.log('Stopwatch rendered');
-  const [time, setTime] = useState(0);
+
+  const [time, setTime] = useState<number>(0);
 
   useEffect(() => {
     let intervalId;
