@@ -6,7 +6,7 @@ type Props = {
     num: number,
     clicked: boolean
   }[],
-  numClick: (e:any) => void
+  numClick: (e: any) => void
 }
 
 const NumList: FC<Props> = memo(props => {

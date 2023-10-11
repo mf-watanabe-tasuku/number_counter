@@ -13,7 +13,7 @@ const Stopwatch: FC<Props> = props => {
   const [time, setTime] = useState<number>(0);
 
   useEffect(() => {
-    let intervalId;
+    let intervalId: NodeJS.Timeout;
 
     if (isTimerStarted)  {
       if (targetNum <= 9) {

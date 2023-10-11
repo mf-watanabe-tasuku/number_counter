@@ -1,10 +1,15 @@
-import { useState, useCallback, memo } from 'react';
+import { useState, useCallback, memo, FC } from 'react';
 import './App.css';
 import NumList from './components/NumList';
 import Stopwatch from './components/Stopwatch';
 import ResetButton from './components/ResetButton';
 
-const App = memo(() => {
+interface NumObjects {
+  num: number,
+  clicked: boolean
+}
+
+const App: FC = memo(() => {
   const makeShuffledNumObjects = () => {
     const nums = [...Array(9).keys()].map(num => num + 1);
     const shuffledNums = [...nums.sort(() => Math.random() - 0.5)];
@@ -12,11 +17,11 @@ const App = memo(() => {
     return shuffledNumObjects;
   };
 
-  const [targetNum, setTargetNum] = useState(1);
-  const [isTimerStarted, setIsTimerStarted] = useState(false);
-  const [numObjects, setNumObjects] = useState(makeShuffledNumObjects());
+  const [targetNum, setTargetNum] = useState<number>(1);
+  const [isTimerStarted, setIsTimerStarted] = useState<boolean>(false);
+  const [numObjects, setNumObjects] = useState<NumObjects[]>(makeShuffledNumObjects());
 
-  const handleNumClick = (e) => {
+  const handleNumClick = (e: any) => {
     const clickedNum = parseInt(e.target.textContent);
     if (clickedNum !== targetNum) return;
 
