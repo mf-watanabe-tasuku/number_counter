@@ -21,8 +21,9 @@ const App: FC = memo(() => {
   const [isTimerStarted, setIsTimerStarted] = useState<boolean>(false);
   const [numObjects, setNumObjects] = useState<NumObjects[]>(makeShuffledNumObjects());
 
-  const handleNumClick = (e: any) => {
-    const clickedNum = parseInt(e.target.textContent);
+  const handleNumClick = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    const clickedNum = parseInt(target.textContent!);
     if (clickedNum !== targetNum) return;
 
     if (clickedNum === 1) setIsTimerStarted(true);
