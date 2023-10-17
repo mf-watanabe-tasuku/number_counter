@@ -1,4 +1,4 @@
-import { useState, useCallback, memo, FC } from 'react';
+import { useState, FC } from 'react';
 import './App.css';
 import NumList from './components/NumList';
 import Stopwatch from './components/Stopwatch';
@@ -9,7 +9,7 @@ interface NumObjects {
   clicked: boolean
 }
 
-const App: FC = memo(() => {
+const App: FC = () => {
   const makeShuffledNumObjects = () => {
     const nums = [...Array(9).keys()].map(num => num + 1);
     const shuffledNums = [...nums.sort(() => Math.random() - 0.5)];
@@ -18,46 +18,53 @@ const App: FC = memo(() => {
   };
 
   const [targetNum, setTargetNum] = useState<number>(1);
-  const [isTimerStarted, setIsTimerStarted] = useState<boolean>(false);
+  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
   const [numObjects, setNumObjects] = useState<NumObjects[]>(makeShuffledNumObjects());
 
   const handleNumClick = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
     const clickedNum = parseInt(target.textContent!);
+
+    // クリックした数字がtargetNumでない場合は、何も起こらない
     if (clickedNum !== targetNum) return;
 
-    if (clickedNum === 1) setIsTimerStarted(true);
+    // targetNumが1(スタート状態)で1をクリックした時、タイマーがスタートする
+    if (clickedNum === 1) setIsTimerRunning(true);
 
+    // クリックした数字が9の時、タイマーを停止する
+    if (clickedNum === 9) {
+      console.log('success!');
+      setIsTimerRunning(false);
+    }
+
+    // 次のクリック目標となる数字をtargetNumにセットする
+    setTargetNum(targetNum => targetNum + 1);
+
+    // 各数字のクリック状態(boolean)がオブジェクトに格納されているので、ループ処理で更新をかける
     const newNumObjects = numObjects.map(numObject => {
       const {num, clicked} = numObject;
       if (clickedNum === num) {
         return { ...numObject, clicked: !clicked };
       } else {
-        return { ...numObject };
+        return numObject;
       }
     });
-
-    setTargetNum(targetNum => targetNum + 1);
     setNumObjects(newNumObjects);
-
-    if (clickedNum === 9) {
-      console.log('success!');
-    }
   };
 
-  const handleResetClick = useCallback(() => {
+  const handleResetClick = () => {
     setTargetNum(1);
-    setIsTimerStarted(false);
+    setIsTimerRunning(false);
     setNumObjects(makeShuffledNumObjects());
-  }, []);
+  };
 
   return (
     <div className="wrapper">
       <NumList numObjects={numObjects} numClick={handleNumClick} />
-      <Stopwatch isTimerStarted={isTimerStarted} targetNum={targetNum} />
+      <Stopwatch isTimerRunning={isTimerRunning} targetNum={targetNum} />
       <ResetButton resetClick={handleResetClick} targetNum={targetNum} />
     </div>
   );
-});
+};
 
 export default App;

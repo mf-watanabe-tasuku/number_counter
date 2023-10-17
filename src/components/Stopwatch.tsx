@@ -1,30 +1,25 @@
 import { useEffect, useState, FC } from 'react';
 
 type Props = {
-  isTimerStarted: boolean,
+  isTimerRunning: boolean,
   targetNum: number
 }
 
 const Stopwatch: FC<Props> = props => {
-  const { isTimerStarted, targetNum } = props;
+  const { isTimerRunning, targetNum } = props;
 
   console.log('Stopwatch rendered');
 
   const [time, setTime] = useState<number>(0);
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout;
+    if (targetNum === 1) setTime(0);
 
-    if (isTimerStarted)  {
-      if (targetNum <= 9) {
-        intervalId = setInterval(() => setTime(time + 1), 10);
-      }
-    } else {
-      setTime(0);
+    if (isTimerRunning)  {
+      const intervalId = setInterval(() => setTime(time => time + 1), 10);
+      return () => clearInterval(intervalId);
     }
-
-    return () => clearInterval(intervalId);
-  }, [time, isTimerStarted]);
+  }, [isTimerRunning, targetNum]);
 
   const minutes = String(Math.floor((time % 36000) / 6000)).padStart(2, '0');
   const seconds = String(Math.floor((time % 6000) / 100)).padStart(2, '0');

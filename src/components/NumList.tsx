@@ -1,4 +1,4 @@
-import { memo, FC } from "react";
+import { FC } from "react";
 import { nanoid } from 'nanoid';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   numClick: (e: React.MouseEvent<HTMLElement>) => void
 }
 
-const NumList: FC<Props> = memo(props => {
+const NumList: FC<Props> = props => {
   const { numObjects, numClick } = props;
 
   console.log('NumList rendered');
@@ -21,6 +21,6 @@ const NumList: FC<Props> = memo(props => {
       })}
     </ul>
   );
-});
+};
 
 export default NumList;
