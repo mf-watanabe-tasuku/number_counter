@@ -55,7 +55,7 @@ const App: FC = memo(() => {
     <div className="wrapper">
       <NumList numObjects={numObjects} numClick={handleNumClick} />
       <Stopwatch isTimerStarted={isTimerStarted} targetNum={targetNum} />
-      <ResetButton resetClick={handleResetClick} isTimerStarted={isTimerStarted} />
+      <ResetButton resetClick={handleResetClick} targetNum={targetNum} />
     </div>
   );
 });
