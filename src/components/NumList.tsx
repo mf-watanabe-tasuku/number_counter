@@ -12,8 +12,6 @@ type Props = {
 const NumList: FC<Props> = props => {
   const { numObjects, numClick } = props;
 
-  console.log('NumList rendered');
-
   return (
     <ul className="num-list">
       {numObjects.map(({ num, clicked }) => {

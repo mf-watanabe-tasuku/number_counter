@@ -33,7 +33,6 @@ const App: FC = () => {
 
     // クリックした数字が9の時、タイマーを停止する
     if (clickedNum === 9) {
-      console.log('success!');
       setIsTimerRunning(false);
     }
 

@@ -8,8 +8,6 @@ type Props = {
 const ResetButton: FC<Props> = props => {
   const { resetClick, targetNum } = props;
 
-  console.log('ResetButton rendered');
-
   return <button className="reset" onClick={resetClick} disabled={targetNum === 1}>リセット</button>;
 };
 

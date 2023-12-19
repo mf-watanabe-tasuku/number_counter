@@ -8,8 +8,6 @@ type Props = {
 const Stopwatch: FC<Props> = props => {
   const { isTimerRunning, targetNum } = props;
 
-  console.log('Stopwatch rendered');
-
   const [time, setTime] = useState<number>(0);
 
   useEffect(() => {
